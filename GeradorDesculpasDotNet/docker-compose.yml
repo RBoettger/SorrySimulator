@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_strong_password123
+    ports:
+      - "14333:1433"
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Your_strong_password123 -Q "select 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  authservice:
+    build:
+      context: ./src/AuthService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Your_strong_password123;TrustServerCertificate=True;
+      - Jwt__Key=local-dev-key-change
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+
+  excusesservice:
+    build:
+      context: ./src/ExcusesService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8081:8081"
+
+  emailservice:
+    build:
+      context: ./src/EmailService
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8082:8082"
+
+  gateway:
+    build:
+      context: ./src/Gateway
+    depends_on:
+      - authservice
+      - excusesservice
+      - emailservice
+    ports:
+      - "8088:8088"
