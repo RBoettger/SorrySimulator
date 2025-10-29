@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj": {}
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj": {}
   },
   "projects": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj": {
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Temp\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj",
+        "projectUniqueName": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj",
         "projectName": "EmailService",
-        "projectPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj",
+        "projectPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj",
         "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\EmailService\\obj\\",
+        "outputPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\EmailService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",

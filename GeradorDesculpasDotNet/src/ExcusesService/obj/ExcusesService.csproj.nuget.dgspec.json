@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj": {}
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj": {}
   },
   "projects": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj": {
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Temp\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj",
+        "projectUniqueName": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj",
         "projectName": "ExcusesService",
-        "projectPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj",
+        "projectPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\ExcusesService\\ExcusesService.csproj",
         "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\ExcusesService\\obj\\",
+        "outputPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\ExcusesService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",

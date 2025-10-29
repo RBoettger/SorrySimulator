@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2IT/kMh6qPg=",
+  "dgSpecHash": "+ZKj3lXEQcM=",
   "success": true,
-  "projectFilePath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj",
+  "projectFilePath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\EmailService\\EmailService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gabri\\.nuget\\packages\\bouncycastle.cryptography\\2.4.0\\bouncycastle.cryptography.2.4.0.nupkg.sha512",
     "C:\\Users\\gabri\\.nuget\\packages\\mailkit\\4.7.1\\mailkit.4.7.1.nupkg.sha512",

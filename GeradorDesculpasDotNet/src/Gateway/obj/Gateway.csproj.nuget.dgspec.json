@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj": {}
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj": {}
   },
   "projects": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj": {
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Temp\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj",
+        "projectUniqueName": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj",
         "projectName": "Gateway",
-        "projectPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj",
+        "projectPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\Gateway\\Gateway.csproj",
         "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\Gateway\\obj\\",
+        "outputPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\Gateway\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",

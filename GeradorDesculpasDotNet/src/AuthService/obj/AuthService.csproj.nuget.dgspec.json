@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj": {}
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj": {}
   },
   "projects": {
-    "C:\\Temp\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj": {
+    "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Temp\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj",
+        "projectUniqueName": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj",
         "projectName": "AuthService",
-        "projectPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj",
+        "projectPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\AuthService\\AuthService.csproj",
         "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-        "outputPath": "C:\\Temp\\GeradorDesculpasDotNet\\src\\AuthService\\obj\\",
+        "outputPath": "C:\\Temp\\SorrySimulator\\GeradorDesculpasDotNet\\src\\AuthService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
@@ -61,13 +61,11 @@
               "target": "Package",
               "version": "[8.0.7, )"
             },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[8.0.10, )"
             },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.7, )"
             },
