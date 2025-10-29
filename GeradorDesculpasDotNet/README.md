@@ -1,9 +1,8 @@
 # Gerador de Desculpas de Trabalho — .NET 8 (Etapa 1)
 
 **Conforme o enunciado:**
-- Serviços `demo1` e `demo2` removidos (não existem neste bootstrap).
-- Serviços inicializados usando .NET (equivalente ao Spring Initializr).
-- `auth-service` e `gateway` configurados somente com as roles necessárias: `ADMIN` e `USER`.
+- Serviços inicializados usando .NET.
+- `auth-service` e `gateway` configurados roles necessárias: `ADMIN` e `USER`.
 - Estrutura de pastas inspirada no **modelo hexagonal** (pastas Domain/Application/Infrastructure/Api dentro de cada serviço — pronto para extrair para projetos separados futuramente).
 
 ## Serviços e portas
@@ -36,9 +35,4 @@ curl "http://localhost:8088/excuses/generate?motivo=atraso&tom=formal"
 ## Observações de migração do repositório Java
 - Substituímos o Nginx por **Ocelot** (gateway nativo .NET).
 - Apenas **roles necessárias**: `ADMIN` e `USER`.
-- Estrutura de **camadas** já preparada para evoluir conforme o padrão do `auth-service` visto em sala.
-
-## Próximos passos (fora da Etapa 1)
-- Persistir templates de desculpas (SQL) e CRUD protegido por `ADMIN`.
-- Integração real de e-mail com SMTP no `EmailService` (MailKit).
-- Policies no Gateway que validem JWT e roles (delegating handlers) se necessário.
+- Estrutura de **camadas** já preparada para evoluir conforme o padrão do `auth-service`.
