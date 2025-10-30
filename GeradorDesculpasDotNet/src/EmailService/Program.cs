@@ -10,7 +10,6 @@ app.UseSwaggerUI();
 
 app.MapPost("/api/email/send", (EmailRequest req) =>
 {
-    // Stub de envio: apenas loga; configure SMTP real depois.
     Console.WriteLine($"[EmailService] To: {req.To}, Subject: {req.Subject}");
     return Results.Ok(new { sent = true });
 });
