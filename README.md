@@ -1,4 +1,4 @@
-# Gerador de Desculpas de Trabalho — .NET 8 (Etapa 1)
+# Gerador de Desculpas de Trabalho 
 
 **Conforme o enunciado:**
 - Serviços inicializados usando .NET.
