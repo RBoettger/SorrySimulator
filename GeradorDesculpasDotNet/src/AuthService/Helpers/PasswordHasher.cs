@@ -20,7 +20,7 @@ public static class PasswordHasher
         return (hash, salt, algo, iterations);
     }
 
-    // 🔹 Validação da senha
+    // Validação da senha
     public static bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt, int iterations)
     {
         using var pbkdf2 = new Rfc2898DeriveBytes(password, storedSalt, iterations, HashAlgorithmName.SHA256);

@@ -26,11 +26,22 @@ services:
     ports:
       - "8080:8080"
 
+  excuse-generator:
+    build:
+      context: ./src/ExcuseGeneratorService
+    container_name: excuse-generator
+    ports:
+      - "8083:8083"
+
+
+
   excusesservice:
     build:
       context: ./src/ExcusesService
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - excuse-generator
     ports:
       - "8081:8081"
 
@@ -51,3 +62,5 @@ services:
       - emailservice
     ports:
       - "8088:8088"
+
+      

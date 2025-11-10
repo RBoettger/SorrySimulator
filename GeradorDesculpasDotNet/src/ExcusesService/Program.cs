@@ -1,24 +1,59 @@
 using Microsoft.OpenApi.Models;
+using System.Net.Http.Json;
+using Microsoft.AspNetCore.OpenApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExcusesService", Version = "v1" });
 });
 
+// HttpClient para o gerador Python
+builder.Services.AddHttpClient("ExcuseGenerator", client =>
+{
+    client.BaseAddress = new Uri("http://excuse-generator:8083");
+});
+
 var app = builder.Build();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGet("/api/excuses/generate", (string? motivo, string? tom) =>
+// Endpoint que chama o gerador Python
+app.MapPost("/api/excuses/generate", async (
+    IHttpClientFactory factory,  // 👈 corrigido aqui
+    string nome,
+    string? motivo
+) =>
 {
-    var tone = string.IsNullOrWhiteSpace(tom) ? "profissional" : tom;
-    var reason = string.IsNullOrWhiteSpace(motivo) ? "imprevistos pessoais" : motivo;
-    var excuse = $"Olá, infelizmente precisei ajustar minha agenda hoje devido a {reason}. Já reorganizei minhas entregas e vou compensar as horas, mantendo o comprometimento com os prazos. Agradeço a compreensão.";
-    if ((tone ?? "").ToLowerInvariant() == "informal")
-        excuse = $"Foi mal! Tive um perrengue com {reason} e não vou conseguir agora. Vou repor e deixar tudo em dia. Valeu pela compreensão!";
-    return Results.Ok(new { message = excuse, tone = tone, reason = reason });
+    var client = factory.CreateClient("ExcuseGenerator");
+
+    var request = new
+    {
+        nome = nome,
+        motivo = motivo
+    };
+
+    try
+    {
+        var response = await client.PostAsJsonAsync("/gerar", request);
+        response.EnsureSuccessStatusCode();
+
+        var result = await response.Content.ReadFromJsonAsync<object>();
+        return Results.Ok(result);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Erro ao gerar desculpa: {ex.Message}");
+    }
+})
+.WithOpenApi(op =>
+{
+    op.Summary = "Gera uma desculpa automática usando o serviço Python";
+    return op;
 });
 
 app.Run();
