@@ -28,7 +28,7 @@ async def gerar(request: ExcuseRequest):
     prompt = (
         f"Escreva uma desculpa curta e natural em português sobre '{motivo}', "
         f"no tom {tom}. Assine como {nome}. "
-        f"A desculpa deve ter no máximo 3 frases, ser convincente e educada."
+        f"A desculpa deve ter no máximo 4 frases, ser convincente e educada."
     )
 
     url = f"https://text.pollinations.ai/prompt/{quote(prompt)}"

@@ -1,17 +1,20 @@
 using Microsoft.OpenApi.Models;
+using System.Net.Http;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExcusesService", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ExcusesService",
+        Version = "v1",
+        Description = "Serviço que gera desculpas automáticas chamando o gerador Python."
+    });
 });
 
-// HttpClient para o gerador Python
 builder.Services.AddHttpClient("ExcuseGenerator", client =>
 {
     client.BaseAddress = new Uri("http://excuse-generator:8083");
@@ -22,20 +25,15 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Endpoint que chama o gerador Python
 app.MapPost("/api/excuses/generate", async (
-    IHttpClientFactory factory,  // 👈 corrigido aqui
+    IHttpClientFactory factory,
     string nome,
     string? motivo
 ) =>
 {
     var client = factory.CreateClient("ExcuseGenerator");
 
-    var request = new
-    {
-        nome = nome,
-        motivo = motivo
-    };
+    var request = new { nome, motivo };
 
     try
     {
@@ -50,10 +48,8 @@ app.MapPost("/api/excuses/generate", async (
         return Results.Problem($"Erro ao gerar desculpa: {ex.Message}");
     }
 })
-.WithOpenApi(op =>
-{
-    op.Summary = "Gera uma desculpa automática usando o serviço Python";
-    return op;
-});
+.WithName("GerarDesculpa")
+.WithSummary("Gera uma desculpa automática usando o serviço Python.")
+.WithDescription("Envia o nome e o motivo para o gerador Python e retorna a desculpa gerada.");
 
 app.Run();

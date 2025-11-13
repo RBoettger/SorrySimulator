@@ -1,20 +1,13 @@
-using System;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using AuthService.Data;
 using AuthService.Helpers;
 using AuthService.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.OpenApi;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,13 +35,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Login
 app.MapPost("/api/auth/login", async (AuthDb db, IConfiguration config, LoginRequest req) =>
 {
     var user = await db.Users.FirstOrDefaultAsync(u => u.Email == req.Email && u.IsActive);
@@ -74,16 +67,8 @@ app.MapPost("/api/auth/login", async (AuthDb db, IConfiguration config, LoginReq
     var token = tokenHandler.CreateToken(descriptor);
     return Results.Ok(new { token = tokenHandler.WriteToken(token) });
 })
-.WithName("Login")
-.WithOpenApi(op =>
-{
-    op.Summary = "Faz o login.";
-    op.Description = "Faz o login do usuário.";
-    return op;
-});
-;
+.WithName("Login");
 
-// Registro
 app.MapPost("/api/auth/register", async (AuthDb db, RegisterRequest request) =>
 {
     if (await db.Users.AnyAsync(u => u.Email == request.Email))
@@ -109,13 +94,7 @@ app.MapPost("/api/auth/register", async (AuthDb db, RegisterRequest request) =>
 
     return Results.Ok("Usuário registrado com sucesso.");
 })
-.WithName("Register")
-.WithOpenApi(op =>
-{
-    op.Summary = "Registra um novo usuário.";
-    op.Description = "Cria um novo registro de usuário com senha criptografada.";
-    return op;
-});
+.WithName("Register");
 
 app.Run();
 

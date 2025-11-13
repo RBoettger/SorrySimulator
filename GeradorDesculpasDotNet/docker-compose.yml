@@ -9,7 +9,7 @@ services:
     ports:
       - "14333:1433"
     healthcheck:
-      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Your_strong_password123 -Q "select 1" || exit 1
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost,1433 -U sa -P Your_strong_password123 -C -Q \"SELECT 1\" || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -19,10 +19,11 @@ services:
       context: ./src/AuthService
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Your_strong_password123;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=AuthDb;User Id=sa;Password=Your_strong_password123;TrustServerCertificate=True;
       - Jwt__Key=local-dev-key-change
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     ports:
       - "8080:8080"
 
@@ -32,8 +33,6 @@ services:
     container_name: excuse-generator
     ports:
       - "8083:8083"
-
-
 
   excusesservice:
     build:
@@ -45,13 +44,23 @@ services:
     ports:
       - "8081:8081"
 
-  emailservice:
-    build:
-      context: ./src/EmailService
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "8082:8082"
+    emailservice:
+      build:
+        context: ./src/EmailService
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:8082
+        - Smtp__Host=smtp.sendgrid.net
+        - Smtp__Port=587
+        - Smtp__UseStartTls=true
+        - Smtp__UseSsl=false
+        - Smtp__User=apikey
+        - Smtp__Password=${SENDGRID_API_KEY}
+        - Smtp__From=geradordesculpas@gmail.com
+        - Smtp__FromName=Gerador de Desculpas
+      ports:
+        - "8082:8082"
+
 
   gateway:
     build:
@@ -62,5 +71,3 @@ services:
       - emailservice
     ports:
       - "8088:8088"
-
-      

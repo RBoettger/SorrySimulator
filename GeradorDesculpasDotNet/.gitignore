@@ -1,0 +1,81 @@
+# ============================================
+#   .NET build artifacts
+# ============================================
+bin/
+obj/
+out/
+build/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+*.log
+
+# ============================================
+#   User-specific files
+# ============================================
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ============================================
+#   OS-generated files
+# ============================================
+.DS_Store
+Thumbs.db
+
+# ============================================
+#   IDEs
+# ============================================
+
+# Visual Studio
+.vs/
+
+# VSCode
+.vscode/
+.history/
+*.code-workspace
+
+# Rider / IntelliJ
+.idea/
+
+# ============================================
+#   Configuration / Secrets
+# ============================================
+.env
+*.env
+.env.*
+secrets.json
+appsettings.Local.json
+appsettings.Development.Local.json
+
+# ============================================
+#   Docker
+# ============================================
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.dev.yml
+.docker/
+**/.docker/
+
+# ============================================
+#   Node / JS (caso tenha no gateway futuramente)
+# ============================================
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ============================================
+#   NuGet
+# ============================================
+*.nupkg
+.nuget/
+
+# ============================================
+#   Others
+# ============================================
+*.tmp
+*.temp
+*.pid
+*.swp
+*.bak
