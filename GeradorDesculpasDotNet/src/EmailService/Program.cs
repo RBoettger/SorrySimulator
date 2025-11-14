@@ -1,103 +1,60 @@
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Options;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
-// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EmailService", Version = "v1" }));
-
-// Opções de SMTP vindas de appsettings/env vars (prefixo "Smtp")
-builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
-builder.Services.AddSingleton<IEmailSender, MailKitEmailSender>();
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EmailService", Version = "v1" });
+});
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors();
 
-app.MapGet("/", () => Results.Ok("EmailService OK"));
-
-app.MapPost("/api/email/send", async (EmailRequest req, IEmailSender sender, CancellationToken ct) =>
+app.MapPost("/api/email/send", async (EmailRequest req, IConfiguration config) =>
 {
-    if (string.IsNullOrWhiteSpace(req.To) || string.IsNullOrWhiteSpace(req.Subject))
-        return Results.BadRequest("Campos 'to' e 'subject' são obrigatórios.");
+    var apiKey = config["SENDGRID_API_KEY"];
 
-    await sender.SendAsync(req.To, req.Subject, req.Body ?? "", ct);
-    return Results.Ok(new { sent = true });
+    if (string.IsNullOrWhiteSpace(apiKey))
+        return Results.BadRequest("SENDGRID_API_KEY não configurada.");
+
+    var fromEmail = config["SMTP_FROM"];
+    var fromName = config["SMTP_FROM_NAME"];
+
+    if (string.IsNullOrWhiteSpace(fromEmail) || string.IsNullOrWhiteSpace(fromName))
+        return Results.BadRequest("Variáveis SMTP_FROM e SMTP_FROM_NAME não configuradas.");
+
+    var client = new SendGridClient(apiKey);
+
+    var from = new EmailAddress(fromEmail, fromName);
+    var to = new EmailAddress(req.To);
+
+    var msg = MailHelper.CreateSingleEmail(from, to, req.Subject, req.Body, req.Body);
+    var response = await client.SendEmailAsync(msg);
+
+    var body = await response.Body.ReadAsStringAsync();
+
+    return Results.Ok(new
+    {
+        Status = response.StatusCode,
+        Response = body
+    });
 });
 
 app.Run();
 
-/// Models / Services
-
-public record EmailRequest(string To, string Subject, string? Body);
-
-public class SmtpOptions
-{
-    public string Host { get; set; } = "";
-    public int Port { get; set; } = 587;          
-    public bool UseStartTls { get; set; } = true; 
-    public bool UseSsl { get; set; } = false;     
-    public string User { get; set; } = "";
-    public string Password { get; set; } = "";
-    public string From { get; set; } = "";        
-    public string FromName { get; set; } = "EmailService";
-}
-
-public interface IEmailSender
-{
-    Task SendAsync(string to, string subject, string htmlBody, CancellationToken ct = default);
-}
-
-public class MailKitEmailSender : IEmailSender
-{
-    private readonly SmtpOptions _opt;
-    public MailKitEmailSender(IOptions<SmtpOptions> opt) => _opt = opt.Value;
-
-    public async Task SendAsync(string to, string subject, string htmlBody, CancellationToken ct = default)
-    {
-        if (string.IsNullOrWhiteSpace(_opt.Host) || string.IsNullOrWhiteSpace(_opt.From))
-            throw new InvalidOperationException("SMTP não configurado (Host/From).");
-
-        var msg = new MimeMessage();
-        msg.From.Add(new MailboxAddress(_opt.FromName ?? "", _opt.From));
-        msg.To.Add(MailboxAddress.Parse(to));
-        msg.Subject = subject;
-
-        var body = new BodyBuilder
-        {
-            HtmlBody = htmlBody,
-            TextBody = StripHtml(htmlBody)
-        };
-        msg.Body = body.ToMessageBody();
-
-        using var client = new SmtpClient();
-        var secure =
-            _opt.UseSsl ? SecureSocketOptions.SslOnConnect :
-            _opt.UseStartTls ? SecureSocketOptions.StartTls :
-            SecureSocketOptions.Auto;
-
-        await client.ConnectAsync(_opt.Host, _opt.Port, secure, ct);
-
-        if (!string.IsNullOrEmpty(_opt.User))
-            await client.AuthenticateAsync(_opt.User, _opt.Password, ct);
-
-        await client.SendAsync(msg, ct);
-        await client.DisconnectAsync(true, ct);
-    }
-
-    private static string StripHtml(string html)
-    {
-        try
-        {
-            var text = System.Text.RegularExpressions.Regex.Replace(html ?? "", "<.*?>", string.Empty);
-            return string.IsNullOrWhiteSpace(text) ? html : text;
-        }
-        catch { return html; }
-    }
-}
+record EmailRequest(string To, string Subject, string Body);
