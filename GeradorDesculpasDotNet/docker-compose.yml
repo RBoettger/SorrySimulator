@@ -30,6 +30,8 @@ services:
     build:
       context: ./src/ExcuseGeneratorService
     container_name: excuse-generator
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     ports:
       - "8083:8083"
 
@@ -38,6 +40,7 @@ services:
       context: ./src/ExcusesService
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ExcuseGenerator__BaseUrl=http://excuse-generator:8083
     depends_on:
       - excuse-generator
     ports:
@@ -60,7 +63,6 @@ services:
       - Smtp__Password=${SENDGRID_API_KEY}
     ports:
       - "8082:80"
-
 
   gateway:
     build:
