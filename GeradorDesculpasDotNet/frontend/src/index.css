@@ -140,3 +140,51 @@ body {
 .dashboard {
   max-width: 600px;
 }
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+}
+
+.app-header h1 {
+  color: #fff;
+  font-size: 24px;
+}
+
+.app-menu {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.app-menu a {
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.app-menu a:hover {
+  color: #bfdbfe;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #fca5a5;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.page {
+  padding: 40px;
+  color: white;
+}

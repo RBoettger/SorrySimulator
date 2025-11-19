@@ -1,5 +1,4 @@
 using Microsoft.OpenApi.Models;
-using System.Net.Http;
 using System.Net.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,17 +26,21 @@ app.UseSwaggerUI();
 
 app.MapPost("/api/excuses/generate", async (
     IHttpClientFactory factory,
-    string nome,
-    string? motivo
+    ExcuseRequest request
 ) =>
 {
     var client = factory.CreateClient("ExcuseGenerator");
 
-    var request = new { nome, motivo };
+    var payload = new
+    {
+        nome = request.Nome,
+        motivo = request.Motivo,
+        tom = request.Tom
+    };
 
     try
     {
-        var response = await client.PostAsJsonAsync("/gerar", request);
+        var response = await client.PostAsJsonAsync("/gerar", payload);
         response.EnsureSuccessStatusCode();
 
         var result = await response.Content.ReadFromJsonAsync<object>();
@@ -50,6 +53,8 @@ app.MapPost("/api/excuses/generate", async (
 })
 .WithName("GerarDesculpa")
 .WithSummary("Gera uma desculpa automática usando o serviço Python.")
-.WithDescription("Envia o nome e o motivo para o gerador Python e retorna a desculpa gerada.");
+.WithDescription("Envia o nome, motivo e tom para o gerador Python e retorna a desculpa gerada.");
 
 app.Run();
+
+public record ExcuseRequest(string Nome, string? Motivo, string? Tom);

@@ -1,0 +1,73 @@
+.excuse-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #0f172a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 40px #0a0a0a;
+  color: white;
+}
+
+.excuse-form label {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.excuse-form input,
+.excuse-form select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  background: #1e293b;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  outline: none;
+}
+
+.excuse-form input:focus,
+.excuse-form select:focus {
+  border-color: #38bdf8;
+}
+
+.excuse-error {
+  background: #9f1d1d;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  background: #38bdf8;
+  border: none;
+  color: black;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0ea5e9;
+}
+
+.resultado-box {
+  margin-top: 25px;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+}
+
+.copiar-btn {
+  margin-top: 15px;
+  width: 100%;
+  background: #3b82f6;
+}
+
+.copiar-btn:hover {
+  background: #2563eb;
+}

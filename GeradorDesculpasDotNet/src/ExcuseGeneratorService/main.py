@@ -25,7 +25,13 @@ async def gerar(request: ExcuseRequest):
     """
     Gera uma desculpa com base no motivo informado, usando Gemini.
     """
-    motivo = request.motivo or "imprevistos pessoais"
+    motivo: str
+
+    if not request.motivo or request.motivo.strip() == "":
+        motivo = "um motivo aleatório que faça sentido na situação"
+    else:
+        motivo = request.motivo
+
     nome = request.nome or "Usuário"
     tom = (request.tom or "profissional").lower()
 
