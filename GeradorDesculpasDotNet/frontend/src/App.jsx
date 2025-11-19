@@ -1,0 +1,61 @@
+import React from 'react';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { AuthProvider, useAuth } from './auth/AuthContext.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
+
+function PrivateRoute({ children }) {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+}
+
+function Layout({ children }) {
+  const { isAuthenticated, logout } = useAuth();
+
+  return (
+    <div className="app-container">
+      <header className="app-header">
+        <h1>SorrySimulator</h1>
+        <nav>
+          {isAuthenticated ? (
+            <>
+              <Link to="/">Dashboard</Link>
+              <button onClick={logout} className="link-button">
+                Sair
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Cadastro</Link>
+            </>
+          )}
+        </nav>
+      </header>
+      <main className="app-main">{children}</main>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Layout>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Layout>
+    </AuthProvider>
+  );
+}

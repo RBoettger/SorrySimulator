@@ -17,6 +17,8 @@ builder.Services.AddDbContext<AuthDb>(opt => opt.UseSqlServer(connectionString))
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "dev-secret-key";
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 
+var corsPolicyName = "AllowFrontend";
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -30,12 +32,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName, policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
+app.UseCors(corsPolicyName);
 app.UseSwagger();
 app.UseSwaggerUI();
 
