@@ -1,0 +1,36 @@
+.history-container {
+  max-width: 900px;
+  margin: 60px auto;
+  color: #fff;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-card {
+  background: #0f172a;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+}
+
+.history-header {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.history-body {
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.history-footer {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}

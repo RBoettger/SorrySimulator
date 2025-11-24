@@ -7,7 +7,7 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 
 import NewExcusePage from './pages/NewExcusePage.jsx';
-import ExcuseHistoryPage from './pages/ExcuseHistoryPage.jsx';
+import ExcuseHistoryPage from './pages/HistoryPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 
 function PrivateRoute({ children }) {
@@ -29,7 +29,6 @@ function Layout({ children }) {
               <Link to="/">Dashboard</Link>
               <Link to="/excuse/new">Criar desculpa</Link>
               <Link to="/excuse/history">Histórico</Link>
-              <Link to="/settings">Configurações</Link>
 
               <button onClick={logout} className="link-button">
                 Sair
@@ -62,8 +61,6 @@ export default function App() {
               </PrivateRoute>
             }
           />
-
-          {/* novas páginas */}
           <Route
             path="/excuse/new"
             element={
@@ -91,12 +88,12 @@ export default function App() {
             }
           />
 
-          {/* login / cadastro */}
           <Route path="/login" element={<LoginPage />} />
+
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
+          
         </Routes>
       </Layout>
     </AuthProvider>

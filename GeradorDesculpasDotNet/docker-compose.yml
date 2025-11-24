@@ -52,6 +52,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Server=apolo.hostsrv.org,11433;Database=renadev;User Id=gabriel;Password=venerusso123@;TrustServerCertificate=True;
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
       - SMTP_FROM=${SMTP_FROM}
       - SMTP_FROM_NAME=${SMTP_FROM_NAME}

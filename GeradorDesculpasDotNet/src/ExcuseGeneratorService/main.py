@@ -37,8 +37,9 @@ async def gerar(request: ExcuseRequest):
 
     prompt = (
         f"Escreva uma desculpa curta e natural em português sobre '{motivo}', "
-        f"no tom {tom}. Assine como {nome}. "
+        f"no tom {tom}. Assine como {nome}. Faça no formato para ser enviado como e-mail."
         f"A desculpa deve ter no máximo 4 frases, ser convincente e educada."
+        f" Não quero opções de frases, apenas uma, não me de sugestões, quero APENAS a mensagem de desculpa."
     )
 
     try:
